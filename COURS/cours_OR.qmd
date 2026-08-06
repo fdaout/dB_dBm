@@ -22,7 +22,7 @@ format:
     footer: "LP MHR - IUT de Ville d'avray"
     #smaller: true
     css: custom.css
-    embed-resources: true
+    #embed-resources: true
 ---
 
 ## Objectif
