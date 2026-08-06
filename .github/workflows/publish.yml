@@ -1,0 +1,57 @@
+name: Publier le cours dB_dBm
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      # 1. Récupère tout le contenu de votre dépôt
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      # 2. Installe Python
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # 3. Installe les bibliothèques listées dans requirements.txt
+      - name: Installer les bibliothèques Python
+        run: pip install -r requirements.txt
+
+      # 4. Installe Quarto
+      - name: Installer Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      # 5. Rend le dossier COURS
+      - name: Rendre COURS
+        run: quarto render COURS --output-dir ../_site/COURS
+
+      # 6. Rend le dossier FAQ
+      - name: Rendre FAQ
+        run: quarto render FAQ --output-dir ../_site/FAQ
+
+      # 7. Rend le dossier FICHE
+      - name: Rendre FICHE
+        run: quarto render FICHE --output-dir ../_site/FICHE
+
+      # 8. Rend le TD en version étudiant (sans corrigé)
+      - name: Rendre TD - version étudiant
+        run: quarto render TD --profile etudiant --output-dir ../../_site/TD/etudiant
+
+      # 9. Rend le TD en version corrigée
+      - name: Rendre TD - version corrigée
+        run: quarto render TD --profile corrige --output-dir ../../_site/TD/corrige
+
+      # 10. Publie le résultat sur GitHub Pages
+      - name: Publier sur GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
