@@ -1,6 +1,6 @@
 project:
   render:
-    - TD_SF.qmd
+    - td.qmd
 
 profile:
   #default: etudiant
