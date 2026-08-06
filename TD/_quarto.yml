@@ -1,0 +1,8 @@
+project:
+  render:
+    - TD_SF.qmd
+
+profile:
+  #default: etudiant
+  default: corrige
+  group: [etudiant, corrige]

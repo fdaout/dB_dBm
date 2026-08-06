@@ -1,0 +1,63 @@
+/* custom.css — à placer à la racine du projet, à côté de TD1.qmd */
+
+/* Couleur du texte du titre */
+.quarto-title-banner .title {
+  color: #ffffff; /* couleur du texte */
+}
+
+/* Couleur de fond de la bannière (optionnel) */
+.quarto-title-banner {
+  background-color: #194e23;
+}
+
+/* Si tu veux aussi cibler le sous-titre */
+.quarto-title-banner .subtitle {
+  color: #f0f0f0;
+}
+
+.cadre {
+  border: 2px solid #4a4a4a;
+  border-radius: 8px;
+  padding: 1em;
+  margin: 1em 0;
+  background-color: #f8f8f8;
+}
+
+div.callout {
+  border-radius: 6px;
+  border-left-width: 6px !important;
+  border-left-style: solid !important;
+  margin: 1.2rem 0;
+}
+
+/* Note (bleu) */
+div.callout-note {
+  border-left-color: #4c72b0 !important;
+  background-color: #eef3fa !important;
+}
+div.callout-note .callout-icon::before {
+  background-color: #4c72b0;
+}
+
+/* Tip (vert) */
+div.callout-tip {
+  border-left-color: #55a868 !important;
+  background-color: #eef7ef !important;
+}
+div.callout-tip .callout-icon::before {
+  background-color: #55a868;
+}
+
+/* Important (rouge) */
+div.callout-important {
+  border-left-color: #c44e52 !important;
+  background-color: #fbeaea !important;
+}
+div.callout-important .callout-icon::before {
+  background-color: #c44e52;
+}
+
+/* Titre du callout un peu plus marqué */
+div.callout .callout-title {
+  font-weight: 600;
+}

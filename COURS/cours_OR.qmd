@@ -1,0 +1,564 @@
+---
+title: "dB et dBm"
+subtitle: "Exprimer et calculer les niveaux de puissance"
+lang: fr
+author: "F. Daout"
+date: last-modified 
+date-format: long
+format:
+  revealjs:
+    theme: simple
+    #scrollable: true
+    transition: slide
+    slide-number: true
+    progress: true
+    controls: true
+    incremental: true
+    slide-level: 2
+    center: true
+    chalkboard: 
+      buttons: false
+    preview-links: auto
+    footer: "LP MHR - IUT de Ville d'avray"
+    #smaller: true
+    css: custom.css
+    embed-resources: true
+---
+
+## Objectif
+
+:::{.space-m}
+:::
+
+Décrire simplement les gains, les pertes et les puissances en électronique RF.
+
+
+## Pourquoi utiliser une autre échelle ?
+
+Entre deux points d'une chaîne RF, la puissance peut être multipliée ou divisée par des facteurs très grands.
+
+- Amplifier **multiplie** la puissance.
+- Atténuer **divise** la puissance.
+- Les écritures usuelles deviennent vite peu pratiques.
+
+**Idée clé :** le dB rend ces rapports compacts et faciles à calculer.
+
+
+## Une chaîne de composants RF
+
+```{mermaid}
+%%| fig-alt: "Chaîne RF : une puissance d'entrée traverse un amplificateur puis un atténuateur."
+flowchart LR
+  A["Puissance d'entrée"] --> B["Amplificateur<br/>gain"]
+  B --> C["Atténuateur<br/>perte"]
+  C --> D["Puissance de sortie"]
+```
+
+Chaque composant modifie la puissance par un **rapport**.
+
+
+## Définition du dB pour la puissance
+
+**Question : de combien la puissance a-t-elle changé ?**
+
+Le décibel, noté dB, exprime le rapport entre deux valeurs de **même unité**.
+
+Pour deux puissances $P_1$ et $P_2$ :
+
+$$
+\text{dB} = 10 \cdot \log_{10}\left(\frac{P_2}{P_1}\right)
+$$
+
+$P_2/P_1$ est sans unité : le dB est donc un **rapport**, pas une puissance absolue.
+
+
+## Lire le signe d'un rapport en dB
+
+:::{.space-s}
+:::
+
+| Rapport en dB | Interprétation |
+| --- | --- |
+| Positif | amplification |
+| $0$ dB | aucun changement |
+| Négatif | atténuation |
+
+:::{.space-s}
+:::
+
+Un gain de $10$ dB et une atténuation de $10$ dB n'ont pas le même effet.
+
+
+## Un premier repère : $0$ dB
+
+$$
+0\ \text{dB} \Longleftrightarrow \frac{P_2}{P_1} = 1
+$$
+
+* Les deux puissances sont égales.
+
+* Le dB ne dit pas quelle est leur valeur en watts : il indique seulement qu'elles sont identiques.
+
+
+## Repères utiles en puissance
+
+:::{.space-s}
+:::
+
+| Modification de puissance | Rapport en dB |
+| --- | ---: |
+| $\times 2$ | $+3$ dB |
+| $\div 2$ | $-3$ dB |
+| $\times 10$ | $+10$ dB |
+| $\div 10$ | $-10$ dB |
+
+:::{.space-s}
+:::
+
+Ces quatre repères permettent déjà beaucoup de calculs rapides.
+
+
+## Échelle de rapports de puissance
+
+:::{.space-s}
+:::
+
+| dB | Rapport $P_2/P_1$ |
+| ---: | ---: |
+| $-20$ dB | $1/100$ |
+| $-10$ dB | $1/10$ |
+| $0$ dB | $1$ |
+| $10$ dB | $10$ |
+| $20$ dB | $100$ |
+
+Une petite variation en dB peut représenter une grande variation de puissance.
+
+
+## Pourquoi les dB simplifient les calculs
+
+En valeurs linéaires :
+
+$$
+\text{multiplication et division}
+$$
+
+En dB :
+
+$$
+\text{addition et soustraction}
+$$
+
+Cette propriété rend les bilans de puissance lisibles dans une chaîne RF.
+
+---
+
+::: {.callout-note icon="false" icon="false"}
+### Pourquoi ça marche ? (rappel de maths)
+
+Le logarithme transforme un produit en somme :
+
+$$
+\log_{10}(a \times b) = \log_{10}(a) + \log_{10}(b)
+$$
+
+Si une chaîne enchaîne un gain $G$ (rapport $g = P_2/P_1$) puis un autre gain $H$ (rapport $h = P_3/P_2$), le rapport global est $g \times h$. En passant en dB :
+
+$$
+10\log_{10}(g \times h) = 10\log_{10}(g) + 10\log_{10}(h)
+$$
+
+C'est cette seule propriété qui justifie qu'on puisse additionner des dB au lieu de multiplier des rapports.
+
+:::
+
+
+## Calcul rapide : $+26$ dB
+
+Décomposer :
+
+$$
+26 = 20 + 3 + 3
+$$
+
+Donc :
+
+$$
+\times 100 \times 2 \times 2 = \times 400
+$$
+
+Un gain de $26$ dB multiplie approximativement la puissance par $400$.
+
+
+## Calcul rapide : $-13$ dB
+
+Décomposer :
+
+$$
+-13 = -10 - 3
+$$
+
+Donc :
+
+$$
+\div 10 \div 2 = \div 20
+$$
+
+Une atténuation de $13$ dB laisse environ $0.05$ fois la puissance d'entrée.
+
+
+## À retenir sur le dB
+
+- Le dB compare deux grandeurs de même unité.
+- Pour une puissance, $\times 2$ correspond à $+3$ dB.
+- Les gains s'ajoutent en dB.
+- Les atténuations se soustraient en dB.
+
+Le dB est un **rapport**.
+
+
+## Le dBm répond à une autre question
+
+**Quelle est la puissance elle-même ?**
+
+:::{.space-m}
+:::
+
+Pour répondre, il faut choisir une référence fixe.
+
+En RF, la référence du dBm est $1\ \text{mW}$.
+
+
+## Définition du dBm
+
+Le dBm exprime une puissance par rapport à $1\ \text{mW}$.
+
+$$
+\text{dBm} = 10 \cdot \log_{10}\left(\frac{P}{1\ \text{mW}}\right)
+$$
+
+La référence fondamentale est :
+
+$$
+0\ \text{dBm} = 1\ \text{mW}
+$$
+
+
+## Lire une valeur en dBm
+
+- Une valeur positive est supérieure à $1\ \text{mW}$.
+- $0$ dBm correspond à $1\ \text{mW}$.
+- Une valeur négative est inférieure à $1\ \text{mW}$.
+
+Exemple : $10$ dBm représente une puissance supérieure à $1\ \text{mW}$.
+
+
+## Repères essentiels en dBm
+
+| Puissance | Niveau |
+| ---: | ---: |
+| $0.1\ \text{mW}$ | $-10$ dBm |
+| $0.5\ \text{mW}$ | $-3$ dBm |
+| $1\ \text{mW}$ | $0$ dBm |
+| $2\ \text{mW}$ | $3$ dBm |
+| $10\ \text{mW}$ | $10$ dBm |
+| $100\ \text{mW}$ | $20$ dBm |
+
+---
+
+::: {.callout-tip collapse="true" icon="false"}
+## Quelques ordres de grandeur réels
+
+- Un smartphone en émission : environ $+23$ à $+30$ dBm.
+- Un point d'accès WiFi : environ $+20$ dBm.
+- Un récepteur GPS reçoit un signal d'environ $-130$ dBm.
+- Un récepteur radio "sensible" détecte des signaux jusqu'à environ $-100$ dBm.
+
+Ces valeurs donnent une intuition physique aux nombres abstraits manipulés en dBm.
+:::
+
+
+## Convertir des dBm en mW
+
+Pour retrouver la puissance :
+
+$$
+P = 10^{\frac{P_{\text{dBm}}}{10}}\ \text{mW}
+$$
+
+Exemple : $0$ dBm donne $1\ \text{mW}$.
+
+---
+
+::: {.callout-note collapse="true"}
+## D'où vient cette formule ?
+
+On part de la définition du dBm et on isole $P$ :
+
+$$
+P_{\text{dBm}} = 10 \cdot \log_{10}\left(\frac{P}{1\ \text{mW}}\right)
+\;\Longrightarrow\;
+\frac{P_{\text{dBm}}}{10} = \log_{10}\left(\frac{P}{1\ \text{mW}}\right)
+$$
+
+En appliquant $10^{(\cdot)}$ des deux côtés, le logarithme disparaît :
+
+$$
+10^{\frac{P_{\text{dBm}}}{10}} = \frac{P}{1\ \text{mW}}
+\;\Longrightarrow\;
+P = 10^{\frac{P_{\text{dBm}}}{10}}\ \text{mW}
+$$
+:::
+
+
+## Conversion mentale : $+27$ dBm
+
+Décomposer :
+
+$$
+27 = 10 + 10 + 10 - 3
+$$
+
+À partir de $1\ \text{mW}$ :
+
+$$
+1 \times 10 \times 10 \times 10 \div 2 = 500\ \text{mW}
+$$
+
+
+## Conversion mentale : $-16$ dBm
+
+Décomposer :
+
+$$
+-16 = -10 - 3 - 3
+$$
+
+À partir de $1\ \text{mW}$ :
+
+$$
+1 \div 10 \div 2 \div 2 = 0.025\ \text{mW} = 25\ \mu\text{W}
+$$
+
+
+## dB ou dBm ?
+
+:::{.space-s}
+:::
+
+| Écriture | Ce qu'elle décrit |
+| --- | --- |
+| dB | un gain, une perte ou un rapport |
+| dBm | une puissance référencée à $1\ \text{mW}$ |
+
+:::{.space-s}
+:::
+
+Exemple : une puissance de $-10$ dBm traversant un amplificateur avec un gain de $20$ dB devient $10$ dBm.
+
+
+## Calculer une chaîne de puissance
+
+:::{.space-s}
+:::
+
+```{mermaid}
+%%| fig-alt: "Chaîne de puissance : entrée, gain, atténuation, gain, sortie."
+flowchart LR
+  A["$P_e$<br/>dBm"] --> B["+ gain<br/>dB"]
+  B --> C["- atténuation<br/>dB"]
+  C --> D["+ gain<br/>dB"]
+  D --> E["$P_s$<br/>dBm"]
+```
+:::{.space-s}
+:::
+
+On additionne les gains et on soustrait les atténuations.
+
+
+## Exemple de chaîne RF
+
+:::{.space-s}
+:::
+
+Données :
+
+$$
+P_e = -10\ \text{dBm},\quad G_0 = 10\ \text{dB},\quad G_1 = 20\ \text{dB}
+$$
+
+$$
+A = 30\ \text{dB},\quad G_2 = 10\ \text{dB}
+$$
+
+
+## Résultat de la chaîne RF
+
+:::{.space-s}
+:::
+
+$$
+P_s = P_e + G_0 + G_1 - A + G_2
+$$
+
+$$
+P_s = -10 + 10 + 20 - 30 + 10 = 0\ \text{dBm}
+$$
+
+:::{.space-s}
+:::
+
+La puissance de sortie vaut donc $1\ \text{mW}$.
+
+
+## Lien avec une liaison radio
+
+Dans une liaison radio, la puissance reçue dépend :
+
+- de la puissance émise ;
+- des gains d'antenne ;
+- de la perte de parcours.
+
+En dB, le bilan devient une somme et une soustraction :
+
+$$
+P_r = P_e + G_e + G_r - L
+$$
+
+
+## Puissance et tension : attention
+
+La puissance dépend de la tension **et** de l'impédance :
+
+$$
+P = \frac{U_{\text{eff}}^2}{R_c}
+$$
+
+En hyperfréquence, on utilise généralement :
+
+$$
+R_c = 50\ \Omega
+$$
+
+
+## Même puissance, tensions différentes
+
+Pour $0$ dBm :
+
+:::{.space-s}
+:::
+
+| Impédance | Tension efficace |
+| ---: | ---: |
+| $50\ \Omega$ | environ $224\ \text{mV RMS}$ |
+| $75\ \Omega$ | environ $274\ \text{mV RMS}$ |
+
+:::{.space-s}
+:::
+
+Une valeur en dBm ne suffit pas pour connaître la tension sans l'impédance.
+
+
+## Puissance et tension n'utilisent pas la même règle
+
+:::{.space-s}
+:::
+
+| Grandeur | $\times 2$ | $\times 10$ |
+| --- | ---: | ---: |
+| Puissance | $+3$ dB | $+10$ dB |
+| Tension | $+6$ dB | $+20$ dB |
+
+:::{.space-s}
+:::
+
+Pour une tension :
+
+$$
+\text{dB} = 20 \cdot \log_{10}\left(\frac{V_2}{V_1}\right)
+$$
+
+
+## Erreurs fréquentes
+
+::: {.callout-important icon="false"}
+## À ne pas faire
+
+- Confondre dB et dBm.
+- Écrire une puissance absolue en dB.
+- Additionner deux puissances en dBm.
+- Oublier l'impédance pour passer de dBm à une tension.
+- Appliquer $+3$ dB à une tension doublée.
+:::
+
+---
+
+::: {.callout-note  icon="false"}
+## Comment sommer correctement deux puissances en dBm
+
+On ne peut pas additionner directement deux valeurs en dBm : le dBm est une échelle logarithmique, donc $10\ \text{dBm} + 10\ \text{dBm} \neq 20\ \text{dBm}$.
+
+La bonne méthode :
+
+1. Convertir chaque puissance en mW.
+2. Additionner les puissances en mW.
+3. Reconvertir le résultat en dBm.
+
+**Exemple :** deux émetteurs à $10$ dBm chacun ($10$ mW chacun).
+
+$$
+10\ \text{mW} + 10\ \text{mW} = 20\ \text{mW}
+$$
+
+$$
+10 \cdot \log_{10}(20) \approx 13\ \text{dBm}
+$$
+
+Deux sources identiques combinées donnent $+3$ dB par rapport à une seule, pas le double de la valeur en dBm.
+:::
+
+
+## Exercices
+
+:::{.space-m}
+:::
+
+::: {.callout-tip icon="false"}
+## Exercice 1 
+
+Une puissance de $-10$ dBm traverse un atténuateur de $3$ dB.
+
+**Pourquoi la sortie vaut-elle $-13$ dBm ?**
+:::
+
+---
+
+::: {.callout-tip collapse="true" icon="false"}
+## Exercice 2 (chaîne complète)
+
+Une chaîne comporte : $P_e = 5\ \text{dBm}$, un câble avec $2\ \text{dB}$ de perte, un amplificateur de $15\ \text{dB}$, puis un connecteur avec $0{,}5\ \text{dB}$ de perte.
+
+**Calculez $P_s$ en dBm, puis convertissez le résultat en mW.**
+
+*Indice : additionnez/soustrayez les dB, puis utilisez la formule de conversion en mW.*
+:::
+
+---
+
+::: {.callout-tip collapse="true" icon="false"}
+## Exercice 3 (somme de puissances)
+
+Trois antennes émettent chacune une puissance de $17$ dBm.
+
+**Si leurs puissances se combinent, quelle est la puissance totale en dBm ?**
+
+*Indice : repassez en mW avant de sommer (voir le rappel plus haut sur l'addition de puissances en dBm).*
+:::
+
+
+## À retenir
+
+- Le dB exprime un rapport de puissances.
+- Le dBm exprime une puissance référencée à $1\ \text{mW}$.
+- $\times 2$ en puissance correspond à $+3$ dB.
+- Les gains et pertes se calculent par additions et soustractions.
+- La tension associée dépend de l'impédance.

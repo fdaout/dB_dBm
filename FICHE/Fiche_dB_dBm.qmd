@@ -1,0 +1,193 @@
+---
+title: "Outils mathématiques pour l'hyperfréquence"
+subtitle: "Fiche de synthèse sur les dB et dBm"
+lang: fr
+author: Franck DAOUT
+title-block-banner: true
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    fig-align: center
+    fig-width: 6
+    fig-height: 4
+    theme: cosmo
+    css: custom.css
+    embed-resources: true
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## 1. DÉFINITIONS FONDAMENTALES
+
+### Le Décibel (dB)
+
+Le **dB** exprime un **rapport entre deux grandeurs de même nature**. 
+
+**Pourquoi les dB ?**
+
+- Compression des grandes valeurs (0-90 dB = rapports de 1 à 1 milliard)
+- Multiplications → additions, Divisions → soustractions
+- Graphiques plus lisibles (échelles logarithmiques)
+
+### Pour la PUISSANCE :
+$$ \text{dB} = 10 \cdot \log_{10}\left(\frac{P_2}{P_1}\right) \quad \Leftrightarrow \quad \frac{P_2}{P_1} = 10^{\frac{\text{dB}}{10}} $$
+
+### Pour la TENSION :
+$$ \text{dB} = 20 \cdot \log_{10}\left(\frac{V_2}{V_1}\right) \quad \Leftrightarrow \quad \frac{V_2}{V_1} = 10^{\frac{\text{dB}}{20}} $$
+
+> **Pourquoi 10·log pour P et 20·log pour V ?** : Comme $P \propto V^2$, on a $10 \cdot \log_{10}(V^2) = 20 \cdot \log_{10}(V)$
+
+---
+
+## 2. VALEURS USUELLES À CONNAÎTRE PAR CŒUR
+
+| Rapport | dB (Puissance) | dB (Tension) |
+|---------|----------------|--------------|
+| ×10000 | +40 dB | +80 dB |
+| ×1000 | +30 dB | +60 dB |
+| ×100 | +20 dB | +40 dB |
+| ×10 | **+10 dB** | +20 dB |
+| ×2 | **+3 dB** | +6 dB |
+| ×1 | 0 dB | 0 dB |
+| ÷2 | **-3 dB** | -6 dB |
+| ÷10 | **-10 dB** | -20 dB |
+| ÷100 | -20 dB | -40 dB |
+| ÷1000 | -30 dB | -60 dB |
+
+**Règles mnémotechniques :**
+
+-   **+10 dB** = ×10 en puissance
+-   **+3 dB** ≈ ×2 en puissance (exactement 1,995)
+-   **-10 dB** = ÷10 en puissance
+-   **-3 dB** = ÷2 en puissance (exactement 0,501S)
+
+---
+
+## 3. LE dBm - PUISSANCE ABSOLUE
+
+### Définition
+
+Le **dBm** est référencé à **1 milliwatt** :
+
+$$ \boxed{P_{\text{dBm}} = 10 \cdot \log_{10}\left(\frac{P}{1 \ \text{mW}}\right)} \quad \Leftrightarrow \quad \boxed{P_{\text{mW}} = 10^{\frac{P_{\text{dBm}}}{10}}} $$
+
+**Référence fondamentale :** $\boxed{0 \ \text{dBm} = 1 \ \text{mW}}$
+
+| dBm | mW | dBm | mW |
+|-----|-----|-----|-----|
+| +30 dBm | 1 W | -10 dBm | 0,1 mW |
+| +20 dBm | 100 mW | -20 dBm | 0,01 mW |
+| +10 dBm | 10 mW | -30 dBm | 0,001 mW = 1 µW |
+| 0 dBm | 1 mW | -40 dBm | 0,0001 mW = 100 nW |
+| +3 dBm | 2 mW | -74 dBm | 40 pW |
+| -3 dBm | 0,5 mW | -174 dBm/Hz | Bruit thermique/Hz |
+
+### Conversion rapide (méthode de décomposition)
+
+Décomposez le dBm en somme de valeurs connues (-20, -10, -3, 0, +3, +10, +20)
+
+**Exemple :** +27 dBm = 10 + 10 + 10 - 3
+$$ 1 \ \text{mW} \times 10 \times 10 \times 10 \div 2 = 500 \ \text{mW} $$
+
+**Exemple :** -16 dBm = -10 - 3 - 3
+$$ 1 \ \text{mW} \div 10 \div 2 \div 2 = 0,025 \ \text{mW} = 25 \ \mu\text{W} $$
+
+---
+
+## 4. RÈGLES DE CALCUL - TRÈS IMPORTANT !
+
+### Opérations valides et invalides
+
+| Opération | Résultat | Valide ? |
+|-----------|----------|----------|
+| dBm + dB | dBm | ✅ OUI |
+| dBm - dB | dBm | ✅ OUI |
+| dBm - dBm | dB | ✅ OUI |
+| dBm + dBm | ??? | ❌ **NON！** |
+
+### Pour additionner des puissances en dBm :
+
+1. Convertir chaque dBm → mW
+2. Additionner en mW
+3. Reconvertir mW → dBm
+
+$$ \text{Exemple : } 10 \ \text{dBm} + 10 \ \text{dBm} = 10 \ \text{mW} + 10 \ \text{mW} = 20 \ \text{mW} = 13 \ \text{dBm} $$
+
+
+---
+
+## 5. RELATION PUISSANCE - TENSION - IMPÉDANCE
+
+### Formules de base
+
+$$ \boxed{P = \frac{U_{\text{eff}}^2}{R_c}} \quad \Leftrightarrow \quad \boxed{U_{\text{eff}} = \sqrt{P \cdot R_c}} $$
+
+### Tension correspondant à 0 dBm selon l'impédance
+
+| Impédance | 0 dBm en tension |
+|-----------|------------------|
+| 50 Ω | 224 mV RMS |
+| 75 Ω | 274 mV RMS |
+| 300 Ω | 548 mV RMS |
+
+### Le dBµV
+
+$$ U_{\text{dB}\mu\text{V}} = 20 \cdot \log_{10}\left(\frac{U}{1 \ \mu\text{V}}\right) \quad \Leftrightarrow \quad U = 10^{\frac{U_{\text{dB}\mu\text{V}}}{20}} \ \mu\text{V} $$
+
+**Correspondances à 50 Ω :**
+- 0 dBm ≈ 107 dBµV
+- 1 V = 120 dBµV
+
+---
+
+## 6. APPLICATIONS PRATIQUES
+
+### Chaînes de composants (amplis, atténuateurs)
+
+$$ P_{\text{sortie}}(\text{dBm}) = P_{\text{entrée}}(\text{dBm}) + \sum \text{Gains}(\text{dB}) - \sum \text{Pertes}(\text{dB}) $$
+
+### Formule de Friis (liaison radio) 
+
+$$ P_r(\text{dBm}) = P_e(\text{dBm}) + G_e(\text{dB}) + G_r(\text{dB}) - L_{\text{dB}} $$
+
+Avec $L$ la perte de propagation en espace libre :
+$$ L_{\text{dB}} = 20 \cdot \log_{10}\left(\frac{4\pi R}{\lambda}\right) = 20 \cdot \log_{10}\left(\frac{4\pi R f}{c}\right) $$
+
+Où : $R$ = distance, $\lambda$ = longueur d'onde, $f$ = fréquence, $c$ = vitesse de la lumière
+
+---
+
+## 7. RÉSUMÉ DES FORMULES CLÉS
+
+| Sujet | Formule |
+|-------|---------|
+| dB puissance | $10 \cdot \log_{10}(P_2/P_1)$ |
+| dB tension | $20 \cdot \log_{10}(V_2/V_1)$ |
+| dBm | $10 \cdot \log_{10}(P_{\text{mW}})$ |
+| dBm → mW | $10^{\text{dBm}/10}$ |
+| mW → dBm | $10 \cdot \log_{10}(P_{\text{mW}})$ |
+| dBµV | $20 \cdot \log_{10}(U_{\mu\text{V}})$ |
+| Puissance | $P = U^2/R$ |
+| Tension | $U = \sqrt{P \cdot R}$ |
+
+
+---
+
+## RAPPELS IMPORTANTS
+
+### Signes des dB
+- **dB > 0** : Amplification/Gain
+- **dB < 0** : Atténuation/Perte
+- **dB = 0** : Aucun changement
+
+### Attention aux confusions
+- **dB** = rapport relatif (pas d'unité absolue)
+- **dBm** = puissance absolue (référencée à 1 mW)
+- **dBµV** = tension absolue (référencée à 1 µV)
+
+---
+*Mise à jour : 18 mai 2026*

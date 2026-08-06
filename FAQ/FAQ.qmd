@@ -1,0 +1,431 @@
+---
+title: "Outils mathématiques pour l'hyperfréquence"
+subtitle: "FAQ dB-dBm"
+lang: fr
+author: Franck DAOUT
+title-block-banner: true
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    fig-align: center
+    fig-width: 6
+    fig-height: 4
+    theme: cosmo
+    css: custom.css
+    embed-resources: true
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+
+Cette FAQ répond aux questions les plus fréquentes sur le cours des décibels (dB), dBm et unités associées.
+
+---
+
+## Concepts fondamentaux
+
+### Q1 : Qu'est-ce qu'un décibel (dB) ?
+
+Le décibel est une **unité logarithmique** qui exprime le **rapport entre deux grandeurs de même nature** (puissance, tension, courant).
+
+**Formule fondamentale pour la puissance :**
+
+$$
+\text{dB} = 10 \cdot \log_{10}\left(\frac{P_2}{P_1}\right) 
+$$
+
+La formule en puissance suppose implicitement que les deux puissances ont la même unité.
+
+**Pourquoi utiliser les décibels ?**
+
+1. **Compression des grandes valeurs** : Un rapport de 1 milliard s'exprime simplement en 90 dB
+2. **Calculs simplifiés** : Les multiplications deviennent des additions
+3. **Graphiques lisibles** : Les échelles logarithmiques permettent de voir plusieurs décades
+
+> Historique : Le décibel a été introduit vers 1924 en l'honneur de Graham Bell. 1 bel = 10 dB, mais on utilise uniquement le décibel en pratique.
+
+---
+
+### Q2 : Quelle est la différence entre dB et dBm ?
+
+| Unité | Nature | Référence | Utilisé pour |
+|-------|--------|-----------|--------------|
+| **dB** | Rapport relatif | Aucune | Gains, pertes, atténuations |
+| **dBm** | Valeur absolue | 1 mW | Niveaux de puissance absolus |
+
+- **dB** : Exprime un rapport (ex: un amplificateur avec 20 dB de gain)
+- **dBm** : Exprime une puissance absolue référencée à 1 mW
+
+$$ 
+0 \ \text{dBm} = 1 \ \text{mW} 
+$$
+
+**Conversion :**
+
+$$ 
+\text{dBm} = 10 \cdot \log_{10}\left(\frac{P}{1 \ \text{mW}}\right) 
+$$
+
+$$ 
+P = 10^{\frac{\text{dBm}}{10}} \ \text{mW} 
+$$
+
+---
+
+### Q3 : Pourquoi utiliser 10·log pour la puissance mais 20·log pour la tension ?
+
+Cela vient de la relation fondamentale entre puissance et tension :
+
+$$ 
+P = \frac{V^2}{R} 
+$$
+
+La puissance étant proportionnelle au **carré de la tension** :
+
+$$
+\text{dB} = 10 \cdot \log\left(\frac{P_2}{P_1}\right) = 10 \cdot \log\left(\frac{V_2^2}{V_1^2}\right) 
+$$
+
+Or : $\log(x^2) = 2 \cdot \log(x)$, donc :
+
+$$ 
+\text{dB} = 10 \cdot 2 \cdot \log\left(\frac{V_2}{V_1}\right) = 20 \cdot \log\left(\frac{V_2}{V_1}\right) 
+$$
+
+**Résumé :**
+
+| Grandeur | Formule | Multiplication ×2 |
+|----------|---------|-------------------|
+| Puissance | $10 \cdot \log(P_2/P_1)$ | +3 dB |
+| Tension | $20 \cdot \log(V_2/V_1)$ | +6 dB |
+
+---
+
+### Q4 : Qu'est-ce que l'impédance caractéristique et pourquoi 50 Ω ?
+
+L'impédance caractéristique ($R_c$ ou $Z_0$) est la résistance de référence dans un système de transmission.
+
+**Formules fondamentales :**
+
+$$ 
+P = \frac{U_{\text{eff}}^2}{R_c} \quad \text{et} \quad U_{\text{eff}} = \sqrt{P \cdot R_c} 
+$$
+
+**Pourquoi 50 Ω en hyperfréquence ?**
+
+- L'impédance pour la **puissance maximale** dans un câble coaxial rempli d'air est **30 Ω**.
+- L'impédance pour l'**atténuation minimale** est **77 Ω**.
+- Le **50 Ω** est le compromis géométrique (environ $\sqrt{30 \times 77} \approx 48\ \Omega$, arrondi à 50 Ω par convention).  
+
+**Tension à 0 dBm selon l'impédance :**
+
+| Impédance | Tension RMS à 0 dBm |
+|-----------|---------------------|
+| 50 Ω | 224 mV |
+| 75 Ω | 274 mV |
+
+---
+
+## Calculs et conversions
+
+### Q5 : Comment calculer rapidement en dB sans calculatrice ?
+
+**Règles fondamentales à mémoriser :**
+
+| Rapport | Puissance (dB) |
+|---------|----------------|
+| ×2 | +3 dB |
+| ÷2 | -3 dB |
+| ×10 | +10 dB |
+| ÷10 | -10 dB |
+
+**Méthode de décomposition :**
+
+Décomposez le dB en somme de valeurs connues.
+
+**Exemple 1 :** 26 dB
+
+$$ 
+26 \ \text{dB} = 20 + 3 + 3 \to \times 100 \times 2 \times 2 = \times 400
+$$ 
+
+**Exemple 2 :** -13 dB
+
+$$
+-13 \ \text{dB} = -10 - 3 \to \div 10 \div 2 = 0,05
+$$
+
+---
+
+### Q6 : Comment convertir un dBm en mW (et inversement) ?
+
+**Conversion dBm → mW :**
+
+$$ 
+P(\text{mW}) = 10^{\frac{P(\text{dBm})}{10}} 
+$$
+
+**Exemples pratiques :**
+
+| dBm | Calcul | mW |
+|-----|--------|-----|
+| +10 dBm | ×10 | 10 mW |
+| +20 dBm | ×10 ×10 | 100 mW |
+| +3 dBm | ×2 | 2 mW |
+| -10 dBm | ÷10 | 0,1 mW |
+| -27 dBm | ÷10 ÷10 ÷10 ×2 | 0,002 mW = 2 µW |
+
+**Conversion mW → dBm :**
+
+$$ 
+P(\text{dBm}) = 10 \cdot \log_{10}\left(\frac{P(\text{mW})}{1 \ \text{mW}}\right) 
+$$
+
+**Exemple :** +27 dBm
+
+$$ 
+27 = 10 + 10 + 10 - 3 
+$$
+$$
+1 \ \text{mW} \times 10 \times 10 \times 10 \div 2 = 500 \ \text{mW} 
+$$
+
+---
+
+### Q7 : Quels sont les tableaux de référence à connaître ?
+
+**Rapport de puissances :**
+
+| dB | Rapport $P_2/P_1$ |
+|----|-------------------|
+| -40 dB | 1/10000 |
+| -30 dB | 1/1000 |
+| -20 dB | 1/100 |
+| -10 dB | 1/10 |
+| -3 dB | 1/2 |
+| 0 dB | 1 |
+| +3 dB | 2 |
+| +10 dB | 10 |
+| +20 dB | 100 |
+| +30 dB | 1000 |
+
+---
+
+**Valeurs approchées utiles :**
+
+| dB | Rapport approximatif |
+|----|----------------------|
+| 1 dB | ≈ 1,259 |
+| 2 dB | ≈ 1,585 |
+| 5 dB | ≈ 3,162 |
+
+
+---
+
+### Q8 : Comment additionner plusieurs signaux en dBm ?
+
+**ATTENTION :** On ne peut pas additionner directement deux valeurs en dBm !
+
+$$ 
+A_{\text{dBm}} + B_{\text{dBm}} \quad \text{est INVALIDE} 
+$$
+
+**Méthode correcte :**
+
+1. **Convertir** chaque dBm en mW
+2. **Additionner** les puissances en mW
+3. **Reconvertir** en dBm
+
+**Exemple :** Ajouter -10 dBm et -10 dBm
+
+1. -10 dBm → 0,1 mW
+2. 0,1 mW + 0,1 mW = 0,2 mW
+3. 0,2 mW → $10 \cdot \log(0,2) = -7 \ \text{dBm}$
+
+**Règles valides :**
+
+| Opération | Résultat | Exemple |
+|-----------|----------|---------|
+| dBm + dB | dBm | 0 dBm + 10 dB = 10 dBm |
+| dBm - dB | dBm | 20 dBm - 3 dB = 17 dBm |
+| dBm - dBm | dB | 10 dBm - 0 dBm = 10 dB  (Cela donne le rapport entre les deux puissances)|
+
+---
+
+## Unités de mesure
+
+### Q9 : Qu'est-ce que le dBµV et comment le convertir ?
+
+Le **dBµV** (décibel microvolt) est une unité de tension référencée à 1 microvolt.
+
+**Formules :**
+
+$$ 
+U_{\text{dB}\mu\text{V}} = 20 \cdot \log_{10}\left(\frac{U}{1 \ \mu\text{V}}\right) 
+$$
+
+$$ 
+U = 10^{\frac{U_{\text{dB}\mu\text{V}}}{20}} \ \mu\text{V} 
+$$
+
+**Valeurs de référence importantes (50 Ω) :**
+
+| Unité | Valeur |
+|-------|--------|
+| 0 dBm | ≈ 224 mV RMS (efficace) |
+| 0 dBm | ≈ 107 dBµV |
+| 1 V | ≈ 120 dBµV |
+
+---
+
+### Q10 : Quelle est la différence entre dBm, dBµV et dBW ?
+
+| Unité | Référence | Domaines d'application |
+|-------|-----------|------------------------|
+| **dBm** | 1 mW | Télécommunications, RF |
+| **dBµV** | 1 µV | Mesures de tension, TV |
+| **dBW** | 1 W | Puissances élevées, satellites, Radar |
+
+**Conversions :**
+
+$$
+0 \ \text{dBW} = 1 \ \text{W} = 30 \ \text{dBm} 
+$$
+
+$$ 
+0 \ \text{dBm} = 1 \ \text{mW} = -30 \ \text{dBW} 
+$$
+
+---
+
+## Applications pratiques
+
+### Q11 : Comment faire le bilan d'un étage d'amplification ?
+
+**Formule générale :**
+
+$$ 
+P_s(\text{dBm}) = P_e(\text{dBm}) + \sum \text{Gains}(\text{dB}) - \sum \text{Atténuations}(\text{dB}) 
+$$
+
+**Exemple :**
+
+Données :
+- Puissance d'entrée : $P_e = -10 \ \text{dBm}$
+- Gain étage 1 : $G_1 = 10 \ \text{dB}$
+- Gain étage 2 : $G_2 = 20 \ \text{dB}$
+- Atténuateur : $A = 30 \ \text{dB}$
+- Gain étage 3 : $G_3 = 10 \ \text{dB}$
+
+Calcul :
+
+$$ 
+P_s = -10 + 10 + 20 - 30 + 10 = 0 \ \text{dBm} 
+$$
+
+
+---
+
+### Q12 : Comment utiliser la formule de Friis pour une liaison radio ?
+
+**Forme en dB :**
+
+$$ 
+P_r(\text{dBm}) = P_e(\text{dBm}) + G_e(\text{dB}) + G_r(\text{dB}) - L_{\text{dB}} 
+$$
+
+Où :
+
+- $P_r$ = Puissance reçue
+- $P_e$ = Puissance émise
+- $G_e$ = Gain antenne émettrice
+- $G_r$ = Gain antenne réceptrice
+- $L_{\text{dB}}$ = Perte de parcours
+
+**Perte de parcours (espace libre) :**
+
+$$ 
+L_{\text{dB}} = 20 \cdot \log_{10}\left(\frac{4\pi R}{\lambda}\right) 
+$$
+
+Où :
+
+- $R$ = Distance entre antennes
+- $\lambda$ = Longueur d'onde
+
+
+---
+
+## Erreurs courantes
+
+### Q13 : Quelles sont les erreurs les plus fréquentes à éviter ?
+
+**Erreur 1 :** Confondre dB et dBm
+
+- ✅ Correct : "Un gain de 10 dB"
+- ✅ Correct : "Une puissance de 10 dBm"
+- ❌ Incorrect : "Un gain de 10 dBm"
+
+**Erreur 2 :** Additionner deux dBm
+
+- ❌ Incorrect : $10 \ \text{dBm} + 10 \ \text{dBm} = 20 \ \text{dBm}$
+- ✅ Correct : Convertir en mW, additionner, reconvertir
+
+**Erreur 3 :** Utiliser 10·log pour la tension
+
+- ❌ Incorrect : $\text{dB} = 10 \cdot \log(V_2/V_1)$
+- ✅ Correct : $\text{dB} = 20 \cdot \log(V_2/V_1)$
+
+**Erreur 4 :** Nier l'importance de l'impédance
+
+La tension correspondante à un dBm dépend de l'impédance !
+
+- 0 dBm à 50 Ω ≈ 224 mV
+- 0 dBm à 75 Ω ≈ 274 mV
+
+---
+
+### Q14 : Comment interpréter le signe des valeurs en dB ?
+
+| Valeur | Signification | Effet sur le signal |
+|--------|---------------|---------------------|
+| $X_{\text{dB}} > 0$ | **Amplification** | Gain, amplification |
+| $X_{\text{dB}} < 0$ | **Atténuation** | Affaiblissement, perte |
+| $X_{\text{dB}} = 0$ | **Neutre** | Aucun changement |
+
+
+---
+
+## Résumé des formules essentielles
+
+### Puissance
+
+$$ 
+\text{dB} = 10 \cdot \log_{10}\left(\frac{P_2}{P_1}\right) \quad ; \quad \text{dBm} = 10 \cdot \log_{10}\left(\frac{P}{1 \ \text{mW}}\right) 
+$$
+
+### Tension
+
+$$ 
+\text{dB} = 20 \cdot \log_{10}\left(\frac{V_2}{V_1}\right) \quad ; \quad \text{dBµV} = 20 \cdot \log_{10}\left(\frac{V}{1 \ \mu\text{V}}\right) 
+$$
+
+### Conversions inverses
+
+$$ 
+P(\text{mW}) = 10^{\frac{\text{dBm}}{10}} \quad ; \quad V = 10^{\frac{\text{dBµV}}{20}} \ \mu\text{V} 
+$$
+
+### Relation puissance-tension
+
+$$ 
+P = \frac{V_{RMS}^2}{R} \quad ; \quad V_{RMS} = \sqrt{P \cdot R} 
+$$
+
+---
+
+Dernière mise à jour : 18 mai 2026

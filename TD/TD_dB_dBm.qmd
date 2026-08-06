@@ -1,0 +1,563 @@
+---
+title: "Outils mathématiques pour l'hyperfréquence"
+subtitle: "TD sur le dB et le dBm"
+lang: fr
+author: Franck DAOUT
+title-block-banner: true
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    fig-align: center
+    fig-width: 6
+    fig-height: 4
+    theme: cosmo
+    css: custom.css
+    embed-resources: true
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+Ce fichier contient 10 exercices variés pour s'entraîner sur les concepts du décibel, dBm et conversions associées.
+
+---
+
+## Exercice 1 : Conversion puissance vers dBm
+
+**Difficulté :** ★☆☆☆☆
+
+**Énoncé :**
+
+Convertir les puissances suivantes en dBm :
+
+1. $P = 1 \ \text{mW}$
+2. $P = 10 \ \text{mW}$
+3. $P = 100 \ \text{mW}$
+4. $P = 1 \ \text{W}$
+5. $P = 0,1 \ \text{mW}$
+6. $P = 0,001 \ \text{mW}$
+
+::::: {.content-hidden unless-profile="corrige"}
+::: {.callout-note collapse="true"}
+## Corrigé détaillé
+La formule de conversion est :
+
+$$P_{\text{dBm}} = 10 \cdot \log_{10}\left(\frac{P}{1 \ \text{mW}}\right) $$
+
+**1. $P = 1 \ \text{mW}$ :**
+
+$$ P_{\text{dBm}} = 10 \cdot \log_{10}(1) = 10 \cdot 0 = \mathbf{0 \ \text{dBm}} $$
+
+**2. $P = 10 \ \text{mW}$ :**
+
+$$ P_{\text{dBm}} = 10 \cdot \log_{10}(10) = 10 \cdot 1 = \mathbf{10 \ \text{dBm}} $$
+
+**3. $P = 100 \ \text{mW}$ :**
+
+$$ P_{\text{dBm}} = 10 \cdot \log_{10}(100) = 10 \cdot 2 = \mathbf{20 \ \text{dBm}} $$
+
+**4. $P = 1 \ \text{W} = 1000 \ \text{mW}$ :**
+
+$$ P_{\text{dBm}} = 10 \cdot \log_{10}(1000) = 10 \cdot 3 = \mathbf{30 \ \text{dBm}} $$
+
+**5. $P = 0,1 \ \text{mW}$ :**
+
+$$ P_{\text{dBm}} = 10 \cdot \log_{10}(0,1) = 10 \cdot (-1) = \mathbf{-10 \ \text{dBm}} $$
+
+**6. $P = 0,001 \ \text{mW} = 1 \ \mu\text{W}$ :**
+
+$$ P_{\text{dBm}} = 10 \cdot \log_{10}(0,001) = 10 \cdot (-3) = \mathbf{-30 \ \text{dBm}} $$
+
+:::
+:::::
+
+---
+
+## Exercice 2 : Conversion dBm vers puissance
+
+**Difficulté :** ★☆☆☆☆
+
+**Énoncé :**
+
+Convertir les valeurs suivantes de dBm en mW :
+
+1. $P = 17 \ \text{dBm}$
+2. $P = 23 \ \text{dBm}$
+3. $P = -13 \ \text{dBm}$
+4. $P = -7 \ \text{dBm}$
+5. $P = 27 \ \text{dBm}$
+
+::::: {.content-hidden unless-profile="corrige"}
+::: {.callout-note collapse="true"}
+## Corrigé détaillé
+
+La formule de conversion inverse est :
+
+$$ P(\text{mW}) = 10^{\frac{P_{\text{dBm}}}{10}} $$
+
+**Méthode de décomposition :** Utiliser les règles +10 dB = ×10, +3 dB = ×2, -3 dB = ÷2.
+
+**1. $P = 17 \ \text{dBm}$ :**
+
+Décomposition : $17 = 20 - 3$
+
+- $20 \ \text{dBm} = 100 \ \text{mW}$
+- $-3 \ \text{dB} \to \div 2 \to 50 \ \text{mW}$
+
+Résultat approché : $\mathbf{50 \ \text{mW}}$
+
+**2. $P = 23 \ \text{dBm}$ :**
+
+Décomposition : $23 = 20 + 3 = 10 + 10 + 3$
+
+- $0 \ \text{dBm} = 1 \ \text{mW}$
+- $+10 \ \text{dB} \to \times 10 \to 10 \ \text{mW}$
+- $+10 \ \text{dB} \to \times 10 \to 100 \ \text{mW}$
+- $+3 \ \text{dB} \to \times 2 \to 200 \ \text{mW}$
+
+Résultat : $\mathbf{200 \ \text{mW}}$
+
+**3. $P = -13 \ \text{dBm}$ :**
+
+Décomposition : $-13 = -10 - 3$
+
+- $0 \ \text{dBm} = 1 \ \text{mW}$
+- $-10 \ \text{dB} \to \div 10 \to 0,1 \ \text{mW}$
+- $-3 \ \text{dB} \to \div 2 \to 0,05 \ \text{mW}$
+
+Résultat : $\mathbf{0,05 \ \text{mW} = 50 \ \mu\text{W}}$
+
+
+**4. $P = -7 \ \text{dBm}$ :**
+
+Décomposition : $-7 = -10 + 3$
+
+- $0 \ \text{dBm} = 1 \ \text{mW}$
+- $-10 \ \text{dB} \to \div 10 \to 0,1 \ \text{mW}$
+- $+3 \ \text{dB} \to \times 2 \to 0,2 \ \text{mW}$
+
+Résultat : $\mathbf{0,2 \ \text{mW} = 200 \ \mu\text{W}}$
+
+
+**5. $P = 27 \ \text{dBm}$ :**
+
+Décomposition : $27 = 30 - 3 = 10 + 10 + 10 - 3$
+
+- $0 \ \text{dBm} = 1 \ \text{mW}$
+- $+10 \ \text{dB} \to \times 10 \to 10 \ \text{mW}$
+- $+10 \ \text{dB} \to \times 10 \to 100 \ \text{mW}$
+- $+10 \ \text{dB} \to \times 10 \to 1000 \ \text{mW}$
+- $-3 \ \text{dB} \to \div 2 \to 500 \ \text{mW}$
+
+Résultat : $\mathbf{500 \ \text{mW} = 0,5 \ \text{W}}$
+
+:::
+:::::
+
+---
+
+## Exercice 3 : Calcul de gains en dB
+
+**Difficulté :** ★★☆☆☆
+
+**Énoncé :**
+
+Un amplificateur reçoit en entrée un signal de puissance $P_e = -20 \ \text{dBm}$ et a un gain de $G = 27 \ \text{dB}$.
+
+1. Quelle est la puissance de sortie $P_s$ en dBm ?
+2. Quelle est cette puissance en mW ?
+3. Si on ajoute un atténuateur de 10 dB après l'amplificateur, quelle sera la nouvelle puissance de sortie ?
+
+::::: {.content-hidden unless-profile="corrige"}
+::: {.callout-note collapse="true"}
+## Corrigé détaillé
+
+**1. Puissance de sortie de l'amplificateur :**
+
+On additionne le gain (en dB) à la puissance d'entrée (en dBm) :
+
+$$ P_s = P_e + G = -20 \ \text{dBm} + 27 \ \text{dB} = \mathbf{7 \ \text{dBm}} $$
+
+**2. Conversion en mW :**
+
+Décomposition : $7 = 10 - 3$
+
+- $0 \ \text{dBm} = 1 \ \text{mW}$
+- $+10 \ \text{dB} \to \times 10 \to 10 \ \text{mW}$
+- $-3 \ \text{dB} \to \div 2 \to 5 \ \text{mW}$
+
+Résultat : $\mathbf{5 \ \text{mW}}$
+
+**3. Avec l'atténuateur de 10 dB :**
+
+$$ P_{\text{sortie}} = P_s - A = 7 \ \text{dBm} - 10 \ \text{dB} = \mathbf{-3 \ \text{dBm}} $$
+
+En mW : $-3 \ \text{dB}$ correspond à diviser par 2.
+
+- $7 \ \text{dBm} \approx 5 \ \text{mW}$
+- $-3 \ \text{dB} \to \div 2 \to \mathbf{2,5 \ \text{mW}}$
+
+:::
+:::::
+
+---
+
+## Exercice 4 : Relation tension-puissance
+
+**Difficulté :** ★★★☆☆
+
+**Énoncé :**
+
+Dans un système à 50 Ω, on mesure une tension efficace de $U_{\text{eff}} = 1 \ \text{V}$.
+
+1. Calculez la puissance correspondante en watts.
+2. Exprimez cette puissance en dBm.
+3. Exprimez cette tension en dBµV.
+
+::::: {.content-hidden unless-profile="corrige"}
+::: {.callout-note collapse="true"}
+## Corrigé détaillé
+
+
+**Données :**  $R_c = 50\ \Omega$, $U_\text{eff} = 1\ \text{V}$.
+
+**1. Puissance en watts :**
+
+La formule est :
+
+$$ P = \frac{U_{\text{eff}}^2}{R_c} = \frac{1^2}{50} = \frac{1}{50} = \mathbf{0,02 \ \text{W} = 20 \ \text{mW}} $$
+
+**2. Puissance en dBm :**
+
+$$ P_{\text{dBm}} = 10 \cdot \log_{10}\left(\frac{20 \ \text{mW}}{1 \ \text{mW}}\right) = 10 \cdot \log_{10}(20) $$
+
+Décomposition : $20 = 10 \text{mW} \times 2$, donc :
+
+$$ P_{\text{dBm}} = 10\ \text{dBm} + 3\ \text{dB} = \mathbf{13\ \text{dBm}}$$
+
+**3. Tension en dBµV :**
+
+$$ U_{\text{dB}\mu\text{V}} = 20 \cdot \log_{10}\left(\frac{U}{1 \ \mu\text{V}}\right) = 20 \cdot \log_{10}\left(\frac{1 \ \text{V}}{1 \ \mu\text{V}}\right) $$
+
+$$ = 10^6 \to 20 \cdot \log_{10}(10^6) = 20 \cdot 6 = 120\ \text{dB}\mu\text{V}$$
+
+:::
+:::::
+
+---
+
+## Exercice 5 : Étage multi-composant
+
+**Difficulté :** ★★★☆☆
+
+**Énoncé :**
+
+Une chaîne de traitement du signal est composée des éléments suivants :
+
+```
+Entrée → [Ampli: +15 dB] → [Atténuateur: -6 dB] → [Ampli: +20 dB] → [Perte câble: -3 dB] → Sortie
+```
+
+La puissance d'entrée est $P_e = -25 \ \text{dBm}$.
+
+1. Calculez le gain total de la chaîne en dB.
+2. Calculez la puissance de sortie en dBm.
+3. Exprimez la puissance de sortie en mW.
+
+::::: {.content-hidden unless-profile="corrige"}
+::: {.callout-note collapse="true"}
+## Corrigé détaillé
+
+**1. Gain total :**
+
+On somme tous les gains et atténuations :
+
+$$ G_{\text{total}} = +15 - 6 + 20 - 3 = \mathbf{26 \ \text{dB}} $$
+
+**2. Puissance de sortie :**
+
+$$ P_s = P_e + G_{\text{total}} = -25 \ \text{dBm} + 26 \ \text{dB} = \mathbf{1 \ \text{dBm}} $$
+
+**3. Conversion en mW :**
+
+Décomposition : $1 \ \text{dB}$ correspond environ à un facteur 1,26.
+
+- $0 \ \text{dBm} = 1 \ \text{mW}$
+- $+1 \ \text{dB} \to \times 1,26 \to \mathbf{1,26 \ \text{mW}}$
+
+
+:::
+:::::
+
+---
+
+## Exercice 6 : Addition de puissances
+
+**Difficulté :** ★★★☆☆
+
+**Énoncé :**
+
+Deux émetteurs indépendants delivrent chacun une puissance de $10 \ \text{dBm}$ vers une même antenne (non corrélés en phase).
+
+1. Quelle est la puissance totale en mW ?
+2. Exprimez cette puissance totale en dBm.
+3. Pourquoi ne peut-on pas simplement faire $10 + 10 = 20 \ \text{dBm}$ ?
+
+::::: {.content-hidden unless-profile="corrige"}
+::: {.callout-note collapse="true"}
+## Corrigé détaillé
+
+**1. Puissance totale en mW :**
+
+Chaque émetteur $10 \ \text{dBm}$ converti en mW :
+
+$$ P_1 = P_2 = 10^{\frac{10}{10}} = 10^1 = 10 \ \text{mW} $$
+
+Puissance totale :
+
+$$ P_{\text{total}} = 10 \ \text{mW} + 10 \ \text{mW} = \mathbf{20 \ \text{mW}} $$
+
+**2. Puissance totale en dBm :**
+
+$$ P_{\text{total,dBm}} = 10 \cdot \log_{10}(20) = 10 \cdot 1,3 = \mathbf{13 \ \text{dBm}} $$
+
+**3. Pourquoi pas 20 dBm ?**
+
+Les dBm sont des grandeurs **logarithmiques**. On ne peut pas les additionner directement car :
+
+$$ 10 \ \text{dBm} + 10 \ \text{dBm} \neq 20 \ \text{dBm} $$
+
+Le calcul est **incorrect** parce que le logarithme d'une somme n'est pas la somme des logarithmes :
+
+$$ \log(a) + \log(b) \neq \log(a + b) $$
+
+**La règle :** Quand on additionne des puissances, il faut les convertir en unités linéaires (mW), additionner, puis reconvertir en dBm.
+
+Le résultat correct est 13 dBm, pas 20 dBm !
+
+:::
+:::::
+
+---
+
+## Exercice 7 : Bilan de liaison (Formule de Friis simplifiée)
+
+**Difficulté :** ★★★☆☆
+
+**Énoncé :**
+
+Un système de communication sans fil a les paramètres suivants :
+
+- Puissance d'émission : $P_e = 20 \ \text{dBm}$
+- Gain antenne émettrice : $G_e = 5 \ \text{dB}$
+- Gain antenne réceptrice : $G_r = 3 \ \text{dB}$
+- Perte de parcours : $L = 80 \ \text{dB}$
+
+1. Calculez la puissance reçue $P_r$ en dBm.
+2. Si la sensibilité du récepteur est $-90 \ \text{dBm}$, la liaison est-elle réalisable ?
+3. De quel marge de liaison dispose-t-on ?
+
+::::: {.content-hidden unless-profile="corrige"}
+::: {.callout-note collapse="true"}
+## Corrigé détaillé
+
+
+**1. Puissance reçue :**
+
+Formule du bilan de liaison :
+
+$$ P_r = P_e + G_e + G_r - L $$
+
+$$ P_r = 20 + 5 + 3 - 80 = \mathbf{-52 \ \text{dBm}} $$
+
+**2. La liaison est-elle réalisable ?**
+
+Sensibilité du récepteur : $-90 \ \text{dBm}$
+
+Puissance reçue : $-52 \ \text{dBm}$
+
+Comme $-52 \ \text{dBm} > -90 \ \text{dBm}$, la puissance reçue est **supérieure** à la sensibilité minimale.
+
+**Réponse : OUI**, la liaison est réalisable.
+
+**3. Marge de liaison :**
+
+$$ M = P_r - P_{\text{sensibilité}} = -52 - (-90) = -52 + 90 = \mathbf{38 \ \text{dB}} $$
+
+On dispose d'une marge de liaison de 38 dB, ce qui est une bonne valeur pour une liaison robuste.
+
+:::
+:::::
+
+---
+
+## Exercice 8 : Caractérisation d'un coupleur directionnel
+
+**Difficulté :** ★★★★☆
+
+**Énoncé :**
+
+On mesure un coupleur directionnel avec les puissances suivantes :
+
+- $P_1 = 0 \ \text{dBm}$ (port d'entrée)
+- $P_2 = -0,5 \ \text{dBm}$ (port de sortie principal)
+- $P_3 = -20 \ \text{dBm}$ (port couplé)
+- $P_4 = -50 \ \text{dBm}$ (port isolé)
+
+Calculez :
+
+1. Le couplage $C$
+2. La perte d'insertion $L$
+3. L'isolation $I$
+4. La directivité $D$
+5. Vérifiez la relation $D = I - C$
+
+::::: {.content-hidden unless-profile="corrige"}
+::: {.callout-note collapse="true"}
+## Corrigé détaillé
+
+**1. Couplage :**
+
+$$ C = P_1 - P_3 = 0 - (-20) = \mathbf{20 \ \text{dB}} $$
+
+**2. Perte d'insertion :**
+
+$$ L = P_1 - P_2 = 0 - (-0,5) = \mathbf{0,5 \ \text{dB}} $$
+
+**3. Isolation :**
+
+$$ I = P_1 - P_4 = 0 - (-50) = \mathbf{50 \ \text{dB}} $$
+
+**4. Directivité :**
+
+$$ D = P_3 - P_4 = -20 - (-50) = -20 + 50 = \mathbf{30 \ \text{dB}} $$
+
+**5. Vérification :**
+
+$$ I - C = 50 - 20 = 30 \ \text{dB} = D $$
+
+La relation est **vérifiée** : $D = I - C$.
+
+:::
+:::::
+
+---
+
+## Exercice 9 : Conversions avec tension et impédance
+
+**Difficulté :** ★★★☆☆
+
+**Énoncé :**
+
+Dans un système à 75 Ω :
+
+1. Quelle est la tension efficace correspondant à $0 \ \text{dBm}$ ?
+2. Quelle est la tension efficace correspondant à $10 \ \text{dBm}$ ?
+3. Si on mesure $100 \ \text{mV}$ RMS, quelle est la puissance en dBm ?
+
+::::: {.content-hidden unless-profile="corrige"}
+::: {.callout-note collapse="true"}
+## Corrigé détaillé
+
+**Données :** $R_c = 75 \ \Omega$
+
+**1. Tension à $0 \ \text{dBm}$ :**
+
+$0 \ \text{dBm} = 1 \ \text{mW} = 0,001 \ \text{W}$
+
+$$ U = \sqrt{P \cdot R_c} = \sqrt{0,001 \cdot 75} = \sqrt{0,075} \approx \mathbf{274 \ \text{mV}} $$
+
+**2. Tension à $10 \ \text{dBm}$ :**
+
+$10 \ \text{dBm} = 10 \ \text{mW} = 0,01 \ \text{W}$
+
+$$ U = \sqrt{0,01 \cdot 75} = \sqrt{0,75} \approx \mathbf{866 \ \text{mV}} $$
+
+**3. Puissance pour $100 \ \text{mV} = 0,1 \ \text{V}$ :**
+
+$$ P = \frac{U^2}{R_c} = \frac{0,1^2}{75} = \frac{0,01}{75} \approx 0,000133 \ \text{W} = 0,133 \ \text{mW} $$
+
+Conversion en dBm :
+
+$$ P_{\text{dBm}} = 10 \cdot \log_{10}(0,133) \approx 10 \cdot (-0,876) \approx \mathbf{-8,76 \ \text{dBm}} $$
+
+:::
+:::::
+
+---
+
+## Exercice 10 : Bruit thermique et rapport signal sur bruit
+
+**Difficulté :** ★★★★☆
+
+**Énoncé :**
+
+Un récepteur radio a les caractéristiques suivantes :
+
+- Bande passante : $B = 1 \ \text{MHz} = 10^6 \ \text{Hz}$
+- Puissance du signal reçu : $P_{\text{signal}} = -70 \ \text{dBm}$
+
+1. Calculez la puissance du bruit thermique dans cette bande passante.
+2. Calculez le rapport signal sur bruit (RSB) en dB.
+3. Si on double la bande passante, quel sera le nouveau RSB ?
+
+::::: {.content-hidden unless-profile="corrige"}
+::: {.callout-note collapse="true"}
+## Corrigé détaillé
+
+**1. Puissance du bruit thermique :**
+
+Le bruit thermique de fond est $-174 \ \text{dBm/Hz}$. La valeur $-174\ \text{dBm/Hz}$ est le plancher de bruit thermique à température ambiante standard ($T_0 = 290\ \text{K}$), calculée par $P = k T_0 B$ avec $k = 1{,}38 \times 10^{-23}\ \text{J/K}$ 
+
+Pour une bande passante $B$ :
+
+$$ P_{\text{bruit}} = -174 + 10 \cdot \log_{10}(B) $$
+
+$$ P_{\text{bruit}} = -174 + 10 \cdot \log_{10}(10^6) = -174 + 10 \cdot 6 = -174 + 60 = \mathbf{-114 \ \text{dBm}} $$
+
+**2. Rapport signal sur bruit (RSB) :**
+
+En dB, le RSB s'obtient par soustraction :
+
+$$ \text{RSB} = P_{\text{signal}} - P_{\text{bruit}} = -70 - (-114) = -70 + 114 = \mathbf{44 \ \text{dB}} $$
+
+**3. Bande passante doublée ($B = 2 \ \text{MHz}$) :**
+
+Nouveau bruit :
+
+$$ P_{\text{bruit,new}} = -174 + 10 \cdot \log_{10}(2 \cdot 10^6) $$
+$$ = -174 + 10 \cdot (\log_{10}(2) + 6) = -174 + 10 \cdot (0,3 + 6) $$
+$$ = -174 + 63 = \mathbf{-111 \ \text{dBm}} $$
+
+Note : doubler la bande passante ajoute +3 dB de bruit.
+
+**Nouveau RSB :**
+
+$$ \text{RSB}_{\text{new}} = -70 - (-111) = -70 + 111 = \mathbf{41 \ \text{dB}} $$
+
+Le RSB diminue de 3 dB quand on double la bande passante (puisque le bruit augmente de 3 dB).
+
+:::
+:::::
+
+
+---
+
+## Résumé des formules utilisées
+
+| Formule | Application |
+|---------|-------------|
+| $P_{\text{dBm}} = 10 \cdot \log_{10}(P_{\text{mW}})$ | mW → dBm |
+| $P_{\text{mW}} = 10^{P_{\text{dBm}}/10}$ | dBm → mW |
+| $U_{\text{dB}\mu\text{V}} = 20 \cdot \log_{10}(U / 1\ \mu\text{V})$ | µV → dBµV |
+| $U = \sqrt{P \cdot R}$ | Puissance vers tension |
+| $P = U^2/R$ | Tension vers puissance |
+| $P_r = P_e + G_e + G_r - L$ | Bilan de liaison |
+| $P_{\text{bruit}} = -174 + 10 \cdot \log_{10}(B)$ | Bruit thermique |
+
+---
+
+*Dernière mise à jour : 18 mai 2026*
