@@ -43,11 +43,11 @@ jobs:
 
       # 8. Rend le TD en version étudiant (sans corrigé)
       - name: Rendre TD - version étudiant
-  	run: quarto render TD --profile etudiant --output-dir ../_site/TD/etudiant
+        run: quarto render TD --profile etudiant --output-dir ../_site/TD/etudiant
 
       # 9. Rend le TD en version corrigée
       - name: Rendre TD - version corrigée
-  	run: quarto render TD --profile corrige --output-dir ../_site/TD/corrige
+        run: quarto render TD --profile corrige --output-dir ../_site/TD/corrige
 
       # 10. Publie le résultat sur GitHub Pages
       - name: Publier sur GitHub Pages
