@@ -195,10 +195,8 @@ Résultat : $\mathbf{5 \ \text{mW}}$
 
 $$ P_{\text{sortie}} = P_s - A = 7 \ \text{dBm} - 10 \ \text{dB} = \mathbf{-3 \ \text{dBm}} $$
 
-En mW : $-3 \ \text{dB}$ correspond à diviser par 2.
 
-- $7 \ \text{dBm} \approx 5 \ \text{mW}$
-- $-3 \ \text{dB} \to \div 2 \to \mathbf{2,5 \ \text{mW}}$
+$-3 \ \text{dBm} = 0 \text{dBm} - 3 \text{dB} \to \text{1 mW} \div 2 \to \mathbf{0.5 \ \text{mW}}$
 
 :::
 :::::
@@ -300,7 +298,7 @@ Décomposition : $1 \ \text{dB}$ correspond environ à un facteur 1,26.
 
 **Énoncé :**
 
-Deux émetteurs indépendants delivrent chacun une puissance de $10 \ \text{dBm}$ vers une même antenne (non corrélés en phase).
+Deux émetteurs indépendants delivrent chacun une puissance de $10 \ \text{dBm}$ vers une même antenne.
 
 1. Quelle est la puissance totale en mW ?
 2. Exprimez cette puissance totale en dBm.
